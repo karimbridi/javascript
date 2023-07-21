@@ -1,0 +1,29 @@
+body {
+    background-color: #011c39;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.boton {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background-color: #008285;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px black;
+}
+
+.boton:hover {
+    background-color: #00b3b8;
+}
+
+.boton:active {
+    background-color: #00d5db;
+    color: black;
+}
