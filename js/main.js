@@ -1,158 +1,182 @@
+let txtBuscar = document.getElementById("txtBuscar")
+txtBuscar.value = "0"
 
-let boton = document.getElementById("start")
-boton.addEventListener("click", startCode)
-function startCode () {
+let txtEditar = document.getElementById("txtEditar")
+txtEditar.value = "0"
 
-    let verStock = prompt(("Bienvenido al simulador de ventas de vehículos\nDesea visualizar el stock? [Y/N]"))
-    if (verStock != null && verStock.toUpperCase() == "Y"){
-        alert("El stock actual es:\n\n"+stockDisponible()+"\n")
-    }
+let btnBuscar = document.getElementById("btnBuscar")
+btnBuscar.addEventListener("click", refreshDetalles)
 
-    let verVendidos = prompt(("Desea ver los vehículos ya vendidos? [Y/N]"))
-    if (verVendidos !=  null && verVendidos.toUpperCase() == "Y") {
-        alert("Los vehículos vendidos son:\n"+yaVendidos())
-    }
+let btnEditar = document.getElementById("btnEditar")
+btnEditar.addEventListener("click", editarVehiculo)
 
-    let cargarNuevo = prompt(("Desea cargar un nuevo vehículo al stock? [Y/N]"))
-    if (cargarNuevo !=  null && cargarNuevo.toUpperCase() == "Y") {
-        let x = arrayVehiculos.length + 1
-        let a = prompt("Ingrese la marca")
-        let b = prompt("Ingrese el modelo")
-        let c = prompt("Ingrese el color")
-        let d = prompt("Ingrese el año de fabricación")
-        let e = prompt("Ingrese el precio")
-        const vehiculoNuevo = new Vehiculo(x, a, b, c, d, e, false)
-        arrayVehiculos.push(vehiculoNuevo)
-    }
+let btnCrear = document.getElementById("btnCrear")
+btnCrear.addEventListener("click", crearVehiculo)
 
-    let eliminar = parseInt(prompt(("Desea eliminar un vehículo del stock?\nIngrese 0 si la respuesta es no, o un número correspondiente al id del item a eliminar")))
-    if (eliminar > 0 && eliminar <= arrayVehiculos.length) {
-        eliminarVehiculo(eliminar)
-        alert("Se eliminó el vehículo con id: " + eliminar)
-    }else{
-        alert("No se eliminó ningún elemento")
-    }
+let btnBorrar = document.getElementById("btnBorrar")
+btnBorrar.addEventListener("click", borrarVehiculo)
 
-    let filtrarPrecio = prompt("Si desea filtrar los vehículos en la base de datos por precio ingrese el valor deseado [" + mayorPrecio() + "/" + menorPrecio() + "]")
-    if (filtrarPrecio !=  null && parseInt(filtrarPrecio) > 0) {
-        parseInt(filtrarPrecio)
-        alert("Los vehículos que superan los $" + filtrarPrecio + " son:\n" + precioMayor(filtrarPrecio) + "\nY los que no superan ese precio son:\n" + precioMenor(filtrarPrecio))
-    }
+let btnReset = document.getElementById("btnReset")
+btnReset.addEventListener("click", resetBD)
 
-    let idVendido = prompt("Desea marcar un vehículo como vendido? Ingrese una id válida para proceder")
-    if (idVendido != null && parseInt(idVendido) >= 0 && parseInt(idVendido) < arrayVehiculos.length){
-        arrayVehiculos[idVendido-1].vendido = true
-    }
-    alert("El siguiente item se marcó como vendido:\n" + verItem(idVendido-1))
+let contenidoDetalles = document.getElementById("contenidoDetalles")
+txtEditar.innerText = ""
 
+function verItemSimple (i){
+    return "[" + arrayVehiculos[i].id + "] " + arrayVehiculos[i].marca + " - " + arrayVehiculos[i].modelo
 }
 
-function verItem (i){
-    return "[" + arrayVehiculos[i].id + "] " + arrayVehiculos[i].marca + " " + arrayVehiculos[i].modelo + " " + arrayVehiculos[i].color + " - Precio: " + arrayVehiculos[i].precio
+function verItemDetallado (i){
+    return "ID: [" + arrayVehiculos[i].id + "]\nMarca: " + arrayVehiculos[i].marca + "\nModelo: " + arrayVehiculos[i].modelo + "\nAño: " + arrayVehiculos[i].año + "\nColor: " + arrayVehiculos[i].color + "\nPrecio: " + arrayVehiculos[i].precio+ "\nVendido: " + arrayVehiculos[i].vendido 
 }
 
-function mayorPrecio (){
-    let p = 0
+function refreshStock () {
+    let showStock = document.getElementById("contenidoStock")
+    showStock.innerText = ""
     for (let i = 0; i < arrayVehiculos.length; i++) {
-        if (arrayVehiculos[i].precio > p){
-            p = arrayVehiculos[i].precio
+        showStock.innerText = showStock.innerText + verItemSimple(i)+"\n\n"
+    }
+}
+
+function refreshDetalles () {
+    for (let i = 0; i < arrayVehiculos.length; i++) {
+        if (txtBuscar.value-1 == i) {
+            contenidoDetalles.innerText = verItemDetallado(txtBuscar.value-1)
+            break;
+        }else{
+            contenidoDetalles.innerText = "El ID ingresado no coincide con ningún vehículo de la base de datos"
         }
     }
-    return p
 }
 
-function menorPrecio (){
-    let p = 999999999
+function editarVehiculo () {
     for (let i = 0; i < arrayVehiculos.length; i++) {
-        if (arrayVehiculos[i].precio < p){
-            p = arrayVehiculos[i].precio
+        if (txtEditar.value-1 == i) {
+            Swal.fire({
+                title: 'Confirmación editar',
+                text: 'Desea marcar el vehículo con ID ['+ txtEditar.value +'] como vendido?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Next'
+            })
+            .then((editar) => {
+                if (editar.isConfirmed) {
+                    arrayVehiculos[txtEditar.value-1].vendido = true
+                    txtBuscar.value = txtEditar.value
+                    refreshDetalles()
+                    refreshStock()
+                }
+                const arrayEnJSON = JSON.stringify(arrayVehiculos);
+                localStorage.setItem("defaultArray", arrayEnJSON);
+            })
+            break;
+        }else{
+            contenidoDetalles.innerText = "No se puede editar.\nEl ID ingresado no coincide con ningún vehículo de la base de datos."
         }
     }
-    return p
 }
 
-function precioMayor (n){
-    let items = ""
-    for (let i = 0; i < arrayVehiculos.length; i++) {
-        if (arrayVehiculos[i].precio >= n){
-            items = items + "[" + arrayVehiculos[i].id + "] " + arrayVehiculos[i].marca + " " + arrayVehiculos[i].modelo + " " + arrayVehiculos[i].color + " - Precio: " + arrayVehiculos[i].precio + "\n"
+function crearVehiculo () {
+    Swal.fire({
+        title: 'Confirmación crear',
+        text: "Seguro que desea cargar un nuevo vehículo a la base de datos?",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+    })
+    .then((crear) => {
+        if (crear.isConfirmed) {
+            let x = arrayVehiculos.length + 1
+            let a = prompt("Ingrese la marca")
+            let b = prompt("Ingrese el modelo")
+            let c = prompt("Ingrese el color")
+            let d = prompt("Ingrese el año de fabricación")
+            let e = prompt("Ingrese el precio")
+            const vehiculoNuevo = new Vehiculo(x, a, b, c, d, e, false)
+            arrayVehiculos.push(vehiculoNuevo)
+            txtBuscar.value = x
+            refreshDetalles()
+            refreshStock()
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'El vehículo se creó satisfactoriamente con la ID ['+x+']',
+                showConfirmButton: false,
+                timer: 4000
+            })
+            const arrayEnJSON = JSON.stringify(arrayVehiculos);
+            localStorage.setItem("defaultArray", arrayEnJSON);
         }
-    }
-    return items
+    })
 }
 
-function precioMenor (n){
-    let items = ""
-    for (let i = 0; i < arrayVehiculos.length; i++) {
-        if (arrayVehiculos[i].precio < n){
-            items = items + "[" + arrayVehiculos[i].id + "] " + arrayVehiculos[i].marca + " " + arrayVehiculos[i].modelo + " " + arrayVehiculos[i].color + " - Precio: " + arrayVehiculos[i].precio + "\n"
+function borrarVehiculo () {
+    Swal.fire({
+        title: 'Confirmación eliminar',
+        text: "Si desea eliminar un vehículo de la base de datos, ingresé la ID y haga click en Borrar",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Borrar',
+        input: 'text',
+        preConfirm: (x) => {
+            if (x != null && !x.isNaN &&  x > 0 && x < arrayVehiculos.length){
+                arrayVehiculos.splice(x-1, 1)
+                for (let i = 0; i < arrayVehiculos.length; i++) {
+                    arrayVehiculos[i].id = i + 1
+                }
+                txtBuscar.value = x
+                refreshStock()
+                contenidoDetalles.innerText = "Se eliminó el vehículo que se encontraba en la posición ["+ x +"] de la base de datos\nSe reacomodaron los items restantes para mejorar la organización"
+            }
         }
-    }
-    return items
-}
-
-function eliminarVehiculo(id){
-    arrayVehiculos.splice(id-1, 1)
-    for (let i = 0; i < arrayVehiculos.length; i++) {
-        arrayVehiculos[i].id = i + 1
-    }
-}
-
-function stockDisponible (){
-    let items = ""
-    for (let i = 0; i < arrayVehiculos.length; i++) {
-        if (arrayVehiculos[i].vendido == false){
-            items = items + verItem(i) + "\n"
+    })
+    .then((borrar) => {
+        if (borrar.isConfirmed) {
+            let x = txtBuscar.value
+            if (x != null && !x.isNaN &&  x > 0 && x < arrayVehiculos.length){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Se eliminó el vehículo que tenía la ID ['+ x +']',
+                    showConfirmButton: false,
+                    timer: 4000
+                })
+            }else{
+                contenidoDetalles.innerText = "No se pudo eliminar.\nEl ID ingresado no coincide con ningún vehículo de la base de datos."
+            }
         }
-    }
-    return items
+    })
 }
 
-function yaVendidos (){
-    let items = ""
-    for (let i = 0; i < arrayVehiculos.length; i++) {
-        if (arrayVehiculos[i].vendido != false){
-            items = items + "[" + arrayVehiculos[i].id + "] " + arrayVehiculos[i].marca + " " + arrayVehiculos[i].modelo + " " + arrayVehiculos[i].color + "\n"
+function resetBD () {
+    Swal.fire({
+        title: 'Confirmación restablecer',
+        text: "Seguro que desea restablecer a dafault la base de datos?",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+    })
+    .then((restablecer) => {
+        if (restablecer.isConfirmed) {
+            localStorage.clear()
+            sessionStorage.clear()
+            defaultArray()
+            refreshStock()
+            contenidoDetalles.innerText = "Se restableció la Base de Datos a los valores por defecto"
+            const arrayEnJSON = JSON.stringify(arrayVehiculos);
+            localStorage.setItem("defaultArray", arrayEnJSON);
+            console.log(localStorage)
         }
-    }
-    return items
+    })
 }
 
-
-
-
-
-/* alert("Bienvenido usuario a esta calculadora de numeros factoriales")
-let factorial1 = Number(prompt("Ingresa el primer número entero"))
-alert("El resultado de "+factorial1+"! es: "+resulFac(factorial1))
-let factorial2 = Number(prompt("Ingresa el segundo número entero"))
-alert("El resultado de "+factorial2+"! es: "+resulFac(factorial2))
-let operacion = prompt("¿Qué operación desea realizar con "+factorial1+"! y "+factorial2+"! [+][-][*]?")
-if (operacion == "+" || operacion == "-" || operacion == "*") {
-    alert("El resultado de "+factorial1+"! "+operacion+" "+factorial2+"! es: "+op(operacion))
-} else {
-    alert("Ingresó una operación inválida")
-}
-
-function resulFac (factorial){
-    if (factorial == 0 || factorial < 0) {
-        return(0)
-    } else {
-        let x = 1
-        for (let i = factorial; i > 0; i--) {
-            x = x * i
-        }
-        return(x)
+function cargarArray () {
+    if (!localStorage) {
+        let arrayEnLS = JSON.stringify(localStorage.getItem(defaultArray))
+        arrayVehiculos = arrayEnLS
     }
 }
-
-function op (operador){
-    switch (operador) {
-        case "+":
-            return resulFac(factorial1) + resulFac(factorial2);
-        case "-":
-            return resulFac(factorial1) - resulFac(factorial2);
-        case "*":
-            return resulFac(factorial1) * resulFac(factorial2);
-    }
-} */

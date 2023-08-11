@@ -7,12 +7,40 @@
     <link rel="stylesheet" href="./css/style.css" />
     <title>Javascript</title>
 </head>
-<body>
+<body onload="refreshStock(), cargarArray()">
     <h1>PROYECTO FINAL CURSO JAVASCRIPT</h1>
     <h2>Simulador de ventas de vehículos</h2>
-    <button class="boton" id="start">Comenzar</button>
+    <div id="contenedor">
+        <section id="inputs">
+            <div id="buscar">
+                <p>Ingrese el ID del vehículo</p>
+                <input class="txt" type="text" id="txtBuscar">
+                <button class="boton" id="btnBuscar">Buscar</button>
+            </div>
+            <div id="editar">
+                <p>Marcar como vendido</p>
+                <input class="txt" type="text" id="txtEditar">
+                <button class="boton" id="btnEditar">Editar</button>
+            </div>
+            <div id="crear">
+                <p>Agregar un vehículo</p>
+                <button class="boton" id="btnCrear">Crear</button>
+                <p>Eliminar un vehículo</p>
+                <button class="boton" id="btnBorrar">Borrar</button>
+            </div>
+        </section>
+        <section id="detalles">
+            <p>Detalles del vehículo:</p>
+            <div id="contenidoDetalles"></div>
+        </section>
+        <section id="stock">
+            <p>Stock vehículos:</p>
+            <p id="contenidoStock"></p>
+        </section>
+    </div>
+    <button class="boton" id="btnReset">Restablecer BD</button>
     <script src="js/main.js"></script>
     <script src="js/stock.js"></script>
-    <h3>Nota: Al recargar la página el simulador vuelve al estado inicial</h3>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

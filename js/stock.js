@@ -19,3 +19,8 @@ const vehiculo7 = new Vehiculo(7, "Porshe", "911", "Verde ingles", 1990, "36000"
 const vehiculo8 = new Vehiculo(8, "Alfa Romeo", "Giulietta", "Negro", 2015, "25000", false)
 
 const arrayVehiculos = [vehiculo1, vehiculo2, vehiculo3, vehiculo4, vehiculo5, vehiculo6, vehiculo7, vehiculo8]
+
+function defaultArray () {
+    arrayVehiculos.length = 0;
+    arrayVehiculos.push(vehiculo1, vehiculo2, vehiculo3, vehiculo4, vehiculo5, vehiculo6, vehiculo7, vehiculo8)
+}

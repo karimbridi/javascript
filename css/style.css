@@ -1,6 +1,6 @@
 body {
-    background-color: #011c39;
-    color: white;
+    background-color: #23272e;
+    color: #e7e7e7;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,31 +8,121 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.boton {
-    font-family: Arial, Helvetica, sans-serif;
-    color: white;
-    background-color: #008285;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px black;
-}
-
-.boton:hover {
-    background-color: #00b3b8;
-}
-
-.boton:active {
-    background-color: #00d5db;
-    color: black;
+h1 {
+    margin: 10px;
 }
 
 h2 {
     font-weight: 100;
+    margin: 10px 10px 20px 10px;
 }
 
-h3 {
-    font-weight: 100;
-    margin-top: 100px;
+#contenedor {
+    display: flex;
+    flex-direction: row;
+    height: 600px;
+    width: 1000px;
+    border: 2px solid #e7e7e7;
+    border-radius: 15px;
+    grid-template-columns: 1fr 1fr 1fr;
 }
+
+#inputs {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: auto;
+}
+
+#detalles {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: auto;
+    border-left: 2px solid #e7e7e7;
+    border-right: 2px solid #e7e7e7;
+    padding: 20px 20px 10px 20px;
+}
+
+#stock {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: auto;
+    padding: 20px 20px 10px 20px;
+}
+
+#buscar, #editar, #crear {
+    font-size: 20px;
+    font-weight: 100;
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    width: auto;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px 10px 20px;
+}
+
+#crear {
+    justify-content: space-evenly;
+}
+
+#editar {
+    border-top: 2px solid #e7e7e7;
+    border-bottom: 2px solid #e7e7e7;
+}
+
+p {
+    margin: 0;
+    font-size: 20px;
+}
+.txt {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #23272e;
+    background-color: #e7e7e7;
+    font-size: 20px;
+    margin: 15px 0 15px 0;
+    padding: 2px;
+    border-radius: 5px;
+    width: 250px;
+    text-align: center;
+}
+
+.boton {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #23272e;
+    background-color: #e7e7e7;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    border: 2px black;
+    width: 90px;
+}
+
+.boton:hover {
+    background-color: white;
+}
+
+.boton:active {
+    background-color: white;
+    color: #1e81b0;
+}
+
+#contenidoDetalles, #contenidoStock {
+    margin-top: 20px;
+    padding: 0;
+    font-size: 18px;
+}
+
+#btnReset {
+    margin-top: 30px;
+    width: 200px;
+}
+
+/* COLORES
+#23272e GRIS
+#919b9d BLANCO
+#e7e7e7 MAS BLANCO
+*/
