@@ -86,7 +86,7 @@ function crearVehiculo () {
     })
     .then((crear) => {
         if (crear.isConfirmed) {
-            location.href = "../pages/crear.html"
+            location.href = "./pages/crear.html"
         }
     })
 }
