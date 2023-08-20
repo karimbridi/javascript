@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css"/>
+    <title>Javascript (Crear)</title>
+</head>
+<body onload="leerArrayLS()">
+    <h1>PROYECTO FINAL CURSO JAVASCRIPT</h1>
+    <h2>Carga de un vehículo nuevo a la base de datos</h2>
+    <div id="datosCrear">
+        <p>Ingrese la marca del vehículo</p>
+        <input class="txt" type="text" id="txtNewMarca">
+        <p>Ingrese el modelo del vehículo</p>
+        <input class="txt" type="text" id="txtNewModelo">
+        <p>Ingrese el color del vehículo</p>
+        <input class="txt" type="text" id="txtNewColor">
+        <p>Ingrese el año vehículo</p>
+        <input class="txt" type="text" id="txtNewAño">
+        <p>Ingrese el precio vehículo</p>
+        <input class="txt" type="text" id="txtNewPrecio">
+        <button class="boton" id="btnCrearNuevo">Crear</button>
+        <button class="boton" id="btnVolver" >Volver</button>
+    </div>
+    <script src="../js/stock.js"></script>
+    <script src="../js/cargar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

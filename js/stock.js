@@ -18,7 +18,7 @@ const vehiculo6 = new Vehiculo(6, "Honda", "Civic", "Blanco", 2023, "24000", fal
 const vehiculo7 = new Vehiculo(7, "Porshe", "911", "Verde ingles", 1990, "36000", true)
 const vehiculo8 = new Vehiculo(8, "Alfa Romeo", "Giulietta", "Negro", 2015, "25000", false)
 
-const arrayVehiculos = [vehiculo1, vehiculo2, vehiculo3, vehiculo4, vehiculo5, vehiculo6, vehiculo7, vehiculo8]
+const arrayVehiculos = []
 
 function defaultArray () {
     arrayVehiculos.length = 0;
