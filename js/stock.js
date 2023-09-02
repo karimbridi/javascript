@@ -9,18 +9,19 @@ class Vehiculo {
         this.vendido = f;
     }
 }
-const vehiculo1 = new Vehiculo(1, "Audi", "A3", "Gris", 2020, "35000", false)
-const vehiculo2 = new Vehiculo(2, "Chevrolet", "Cruze", "Rojo", 2021, "28000", false)
-const vehiculo3 = new Vehiculo(3, "Ford", "Raptor", "Negro", 2022, "38000", false)
-const vehiculo4 = new Vehiculo(4, "Ford", "Focus", "Rojo", 2015, "16000", false)
-const vehiculo5 = new Vehiculo(5, "Mercedes", "C250", "Gris", 2015, "27000", true)
-const vehiculo6 = new Vehiculo(6, "Honda", "Civic", "Blanco", 2023, "24000", false)
-const vehiculo7 = new Vehiculo(7, "Porshe", "911", "Verde ingles", 1990, "36000", true)
-const vehiculo8 = new Vehiculo(8, "Alfa Romeo", "Giulietta", "Negro", 2015, "25000", false)
 
 const arrayVehiculos = []
 
 function defaultArray () {
     arrayVehiculos.length = 0;
-    arrayVehiculos.push(vehiculo1, vehiculo2, vehiculo3, vehiculo4, vehiculo5, vehiculo6, vehiculo7, vehiculo8)
+    fetch ("../json/stock.json")
+    .then( (response) => response.json() )
+    .then( (data) => {
+        for(let x = 0; x < data.length; x++) {
+            const autito = new Vehiculo(data[x].id, data[x].marca, data[x].modelo, data[x].color, data[x].año, data[x].precio, data[x].vendido)
+            arrayVehiculos.push(autito)
+        }
+        editarArrayLS ()
+        refreshStock()
+    })
 }

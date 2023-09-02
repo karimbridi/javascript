@@ -1,0 +1,10 @@
+[
+    {"id": 1, "marca": "Audi", "modelo": "A3", "color": "Gris", "año": 2020, "precio": 35000, "vendido": false},
+    {"id": 2, "marca": "Chevrolet", "modelo": "Cruze", "color": "Rojo", "año": 2021, "precio": 28000, "vendido": false},
+    {"id": 3, "marca": "Ford", "modelo": "Raptor", "color": "Negro", "año": 2022, "precio": 38000, "vendido": false},
+    {"id": 4, "marca": "Ford", "modelo": "Focus", "color": "Rojo", "año": 2015, "precio": 16000, "vendido": false},
+    {"id": 5, "marca": "Mercedes", "modelo": "C250", "color": "Gris", "año": 2023, "precio": 27000, "vendido": true},
+    {"id": 6, "marca": "Honda", "modelo": "Civic", "color": "Blanco", "año": 2015, "precio": 24000, "vendido": false},
+    {"id": 7, "marca": "Porshe", "modelo": "911A3", "color": "Verde ingles", "año": 1990, "precio": 36000, "vendido": true},
+    {"id": 8, "marca": "Alfa Romeo", "modelo": "Giulietta", "color": "Negro", "año": 2015, "precio": 25000, "vendido": false}
+]

@@ -147,8 +147,7 @@ function resetBD () {
 function leerArrayLS () {
     if (!localStorage.getItem("defaultArray")) {
         defaultArray()
-        editarArrayLS ()
-        refreshStock()
+        
     }else {
         const arrayEnLS = JSON.parse(localStorage.getItem("defaultArray"))
         for (let i = 0; i < arrayEnLS.length; i++) {
